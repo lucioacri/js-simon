@@ -1,10 +1,15 @@
 const countdown = document.getElementById("countdown");
 const numbersList = document.getElementById("numbers-list");
 const answersForm = document.getElementById("answers-form");
+const formControl = document.querySelectorAll(".form-control");
+const finalMessage = document.getElementById("message");
 let timeLeft = 10;
+console.log(formControl);
 
 // Arrays
 const generatedNumbers = [];
+let userNumbers = [];
+const correctNumbers = [];
 
 // Countdown
 const countdownTimer = setInterval(() => {
@@ -30,3 +35,14 @@ function randomNumbers(number) {
   return generatedNumbers;
 }
 numbersList.textContent = `${randomNumbers(5)}`;
+console.log(numbersList);
+
+answersForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  for (let i = 0; i < formControl.length; i++) {
+    userNumbers.push(formControl[i].value);
+  }
+  console.log(userNumbers);
+
+  finalMessage.textContent = `Numeri inseriti!`;
+});
