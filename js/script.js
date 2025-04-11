@@ -3,11 +3,11 @@ const numbersList = document.getElementById("numbers-list");
 const answersForm = document.getElementById("answers-form");
 const formControl = document.querySelectorAll(".form-control");
 const finalMessage = document.getElementById("message");
-let timeLeft = 3;
+let timeLeft = 10;
 console.log(formControl);
 
 // Arrays
-const generatedNumbers = [];
+const generatedNumbers = randomNumbers(5);
 let userNumbers = [];
 const correctNumbers = [];
 
@@ -22,19 +22,23 @@ const countdownTimer = setInterval(() => {
     answersForm.classList.replace("d-none", "d-block");
   }
 }, 1000);
-numbersList.cl;
 
 // Random numbers
 function randomNumbers(number) {
-  while (generatedNumbers.length < number) {
+  const numbers = [];
+  while (numbers.length < number) {
     let num = Math.floor(Math.random() * 50 + 1);
-    if (!generatedNumbers.includes(num)) {
-      generatedNumbers.push(num);
+    if (!numbers.includes(num)) {
+      numbers.push(num);
     }
   }
-  return generatedNumbers;
+  return numbers;
 }
-numbersList.textContent = `${randomNumbers(5)}`;
+numbersList.innerHTML = generatedNumbers
+  .map((number) => {
+    return `<li>${number}</li>`;
+  })
+  .join("");
 console.log(numbersList);
 
 answersForm.addEventListener("submit", function (e) {
@@ -44,7 +48,10 @@ answersForm.addEventListener("submit", function (e) {
   }
   console.log(userNumbers);
   for (let i = 0; i < userNumbers.length; i++) {
-    if (generatedNumbers.includes(userNumbers[i])) {
+    if (
+      generatedNumbers.includes(userNumbers[i]) &&
+      !correctNumbers.includes(userNumbers[i])
+    ) {
       correctNumbers.push(userNumbers[i]);
     }
   }
